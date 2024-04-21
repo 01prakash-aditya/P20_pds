@@ -1,3 +1,4 @@
+
 //**********************************************PREPROCESSORS**********************************************************//
 
 // IIT PATNA Transportation Booking System - BROUGHT TO YOU BY : PDS/PROJECT P20 Team
@@ -186,6 +187,7 @@ int login() {
         if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) {
             captchaVerification();
             printf("\nLogin successful!\n");
+            system("cls");
             screenheader();
             intro();
             displayMenu();
