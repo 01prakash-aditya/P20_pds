@@ -2,14 +2,13 @@
 
 // IIT PATNA Transportation Booking System - BROUGHT TO YOU BY : PDS/PROJECT P20 Team
 
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
-#include "flight.c"
-#include "bus.c"
-#include "train.c"
+#include <stdio.h>            // Include standard input/output library
+#include <string.h>           // Include string manipulation library
+#include <stdlib.h>           // Include standard library functions
+#include <math.h>             // Include mathematical functions library
+#include "flight.c"           // Include flight booking functions
+#include "bus.c"              // Include bus booking functions
+#include "train.c"            // Include train booking functions
 
 //Define maximum number of users, maximum username length, maximum password length, and user data file name
 
@@ -20,12 +19,12 @@
 
 // Function Prototypes
 
-void screenheader();
-void intro();
-void displayMenu();
-void saveUserData();
-void loadUserData();
-void captchaVerification();
+void screenheader();           // Function to display header
+void intro();                  // Function to introduce the platform
+void displayMenu();            // Function to display menu
+void saveUserData();           // Function to save user data
+void loadUserData();           // Function to load user data
+void captchaVerification();    // Function to verify captcha
 
 // Define User structure to store username and password
 
@@ -33,6 +32,8 @@ typedef struct {
     char username[MAX_USERNAME_LENGTH];
     char password[MAX_PASSWORD_LENGTH];
 } User;
+
+// Initialize users array and number of users
 
 User users[MAX_USERS];
 int num_users = 0;
@@ -109,7 +110,7 @@ void intro() {
 void displayMenu() {
     int choice;
     do {
-        system("cls"); // Clear the screen before displaying menu
+        system("cls");                                   // Clear the screen before displaying menu
         printf("\n\n\n\t CURRENT SERVICE AVAILABLE ");
         printf("\n");
         printf("\n\t\t\t1. TRAIN BOOKING \n");
@@ -156,7 +157,7 @@ void signup() {
 
     num_users++;
     printf("Signup successful!\n");
-    saveUserData();                                                    // Save user data to file after signup
+    saveUserData();                                       // Save user data to file after signup
 }
 
 //  Function to login on the platform 
@@ -188,14 +189,14 @@ int login() {
             screenheader();
             intro();
             displayMenu();
-            return 1;                          // Return 1 to indicate successful login
+            return 1;                                      // Return 1 to indicate successful login
         }
     }
 
     printf("Invalid username or password.\n");
     printf("Retry!");
     getch();
-    return 0;                                  // Login failed
+    return 0;                                              // Login failed
 }
 
 // Function to save user data 
@@ -235,7 +236,7 @@ void loadUserData() {
 void captchaVerification() {
 
     // Generate a random captcha code
-
+    srand(time(NULL));
     int captchaCode = rand() % 9000 + 1000;
     int userCode;
     printf("\n\nCaptcha Code : %d",captchaCode);
@@ -247,5 +248,3 @@ void captchaVerification() {
         scanf("%d", &userCode);
     }
 }
-
-
