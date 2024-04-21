@@ -52,58 +52,61 @@ int main_train()
     system("cls");
 	
 	int menu_choice,choice_return;
-	start:
-	system("cls");
-	printf("\n=================================\n");
-	printf("    TRAIN RESERVATION SYSTEM");
-	printf("\n=================================");
+	while(true){
+		system("cls");
+		printf("\n=================================\n");
+		printf("    TRAIN RESERVATION SYSTEM");
+		printf("\n=================================");
 
-	printf("\n1>> Reserve A Ticket");
-	printf("\n------------------------");
+		printf("\n1>> Reserve A Ticket");
+		printf("\n------------------------");
 
-	printf("\n2>> View All Available Trains");
-	printf("\n------------------------");
+		printf("\n2>> View All Available Trains");
+		printf("\n------------------------");
 
-	printf("\n3>> Cancel Reservation");
-	printf("\n------------------------");
+		printf("\n3>> Cancel Reservation");
+		printf("\n------------------------");
 
-	printf("\n4>> Show Reserved Tickets");
-	printf("\n------------------------");
+		printf("\n4>> Show Reserved Tickets");
+		printf("\n------------------------");
 
-	printf("\n5>> Go to Main Page");
-	printf("\n------------------------");
+		printf("\n5>> Go to Main Page");
+		printf("\n------------------------");
 
-	printf("\n\n-->");
-	scanf("%d",&menu_choice);
-	switch(menu_choice)
-	{
-		case 1:
-			reservation();
-			break;
-		case 2:
-			viewdetails();
-			printf("\n\nPress any key to go to Main Menu..");
-			getch();
-			break;
-		case 3:
-			cancel();
-			printf("\n\nPress any key to go to Main Menu..");
-			getch();
-			break;
-		case 4:
-		    show();
-			printf("\n\nPress any key to go to Main Menu..");
-			getch();
-			break;
-		case 5:
-			return(0);
-		default:
-			printf("\nInvalid choice");
-			break;
+		printf("\n\n-->");
+		scanf("%d",&menu_choice);
+		switch(menu_choice)
+		{
+			case 1:
+				reservation();
+				continue;
+			case 2:
+				viewdetails();
+				printf("\n\nPress any key to go to Main Menu..");
+				getch();
+				continue;
+			case 3:
+				cancel();
+				printf("\n\nPress any key to go to Main Menu..");
+				getch();
+				continue;
+			case 4:
+				show();
+				printf("\n\nPress any key to go to Main Menu..");
+				getch();
+				continue;
+			case 5:
+				return(0);
+			default:
+				printf("\nInvalid choice");
+				printf("\n\nPress any key to retry..");
+				getch();
+				continue;
+		}
 	}
-	goto start;
 }
 
+//ANSH_PREM
 /*********************************************VIEWDETAILS()*************************************************/
 
 void viewdetails(void)
@@ -197,69 +200,7 @@ void reservation(void)
 	getch();
 }
 
-/*********************************************SHOW()*************************************************/
-
-void show() {
-    pd passdetails;
-    pd passdetails1;
-    FILE *fp;
-    char name[50];
-    int num_of_seats, train_num;
-    float charges;
-	typedef struct {
-    char name[50];
-    int num_of_seats;
-    int train_num;
-    float charges;
-	} pd;
-
-    // Open the file in read mode
-    fp = fopen("train_data.txt", "r");
-    if (fp == NULL) {
-        printf("No reservations found!\n");
-        return;
-    }
-
-    // Print header
-    printf("=============================================\n");
-    printf("    Name\t\tSeats\t\tTrain Number\tCharges\n");
-    printf("=============================================\n");
-
-    // Read and print each reservation entry
-    while (fscanf(fp, "%s%d%d%f", name, &num_of_seats, &train_num, &charges) != EOF) {
-        printf("%10s\t\t%2d\t\t%4d\t\t%.2f\n", name, num_of_seats, train_num, charges);
-    }
-
-    printf("\nFurther details of any of the tickets?\n");
-    printf("Choice (y) or (for n press any key): ");
-    char choice = 'n';
-    scanf(" %c", &choice); // Corrected scanf format specifier
-
-    if (choice == 'y') {
-        printf("\nEnter the name on the ticket: ");
-        scanf("%s", passdetails.name);
-
-        // Rewind the file pointer to the beginning
-        rewind(fp);
-        bool flag=false;
-        // Read and print the ticket if found
-        while (fscanf(fp, "%s%d%d%f", passdetails1.name, &passdetails1.num_of_seats, &passdetails1.train_num, &charges) != EOF) {
-            if (strcmp(passdetails1.name, passdetails.name) == 0) {
-				flag = true;
-                printticket(passdetails1.name, passdetails1.num_of_seats, passdetails1.train_num, charges);
-                break;
-            }
-        }
-		if(flag!=true){
-			printf("Name enetered is incorrect!");
-		}
-
-    }
-
-    // Close the file
-    fclose(fp);
-}
-
+//ARTI
 /*********************************************CHARGE()*************************************************/
 
 float charge(int train_num,int num_of_seats)
@@ -324,22 +265,6 @@ float charge(int train_num,int num_of_seats)
 	{
 		return(2000.0*num_of_seats);
 	}
-}
-
-
-/*********************************************PRINTTICKET()*************************************************/
-
-void printticket(char name[],int num_of_seats,int train_num,float charges)
-{
-	system("cls");
-	printf("-------------------\n");
-	printf("\tTICKET\n");
-	printf("-------------------\n\n");
-	printf("Name:\t\t\t%s",name);
-	printf("\nNumber Of Seats:\t%d",num_of_seats);
-	printf("\nTrain Number:\t\t%d",train_num);
-	specifictrain(train_num);
-	printf("\nCharges:\t\t%.2f",charges);
 }
 
 /*********************************************SPECIFICTRAIN()*************************************************/
@@ -446,6 +371,86 @@ typedef struct {
     float charges;
 } PassengerDetails;
 
+//ADITYA_PRAKASH
+/*********************************************RESERVED_TICKETS_SHOW()*************************************************/
+
+void show() {
+    pd passdetails;
+    pd passdetails1;
+    FILE *fp;
+    char name[50];
+    int num_of_seats, train_num;
+    float charges;
+	typedef struct {
+    char name[50];
+    int num_of_seats;
+    int train_num;
+    float charges;
+	} pd;
+
+    // Open the file in read mode
+    fp = fopen("train_data.txt", "r");
+    if (fp == NULL) {
+        printf("No reservations found!\n");
+        return;
+    }
+
+    // Print header
+    printf("=============================================\n");
+    printf("    Name\t\tSeats\t\tTrain Number\tCharges\n");
+    printf("=============================================\n");
+
+    // Read and print each reservation entry
+    while (fscanf(fp, "%s%d%d%f", name, &num_of_seats, &train_num, &charges) != EOF) {
+        printf("%10s\t\t%2d\t\t%4d\t\t%.2f\n", name, num_of_seats, train_num, charges);
+    }
+
+    printf("\nFurther details of any of the tickets?\n");
+    printf("Choice (y) or (for n press any key): ");
+    char choice = 'n';
+    scanf(" %c", &choice); // Corrected scanf format specifier
+
+    if (choice == 'y') {
+        printf("\nEnter the name on the ticket: ");
+        scanf("%s", passdetails.name);
+
+        // Rewind the file pointer to the beginning
+        rewind(fp);
+        bool flag=false;
+        // Read and print the ticket if found
+        while (fscanf(fp, "%s%d%d%f", passdetails1.name, &passdetails1.num_of_seats, &passdetails1.train_num, &charges) != EOF) {
+            if (strcmp(passdetails1.name, passdetails.name) == 0) {
+				flag = true;
+                printticket(passdetails1.name, passdetails1.num_of_seats, passdetails1.train_num, charges);
+                break;
+            }
+        }
+		if(flag!=true){
+			printf("Name enetered is incorrect!");
+		}
+
+    }
+
+    // Close the file
+    fclose(fp);
+}
+
+/*********************************************PRINTTICKET()*************************************************/
+
+void printticket(char name[],int num_of_seats,int train_num,float charges)
+{
+	system("cls");
+	printf("-------------------\n");
+	printf("\tTICKET\n");
+	printf("-------------------\n\n");
+	printf("Name:\t\t\t%s",name);
+	printf("\nNumber Of Seats:\t%d",num_of_seats);
+	printf("\nTrain Number:\t\t%d",train_num);
+	specifictrain(train_num);
+	printf("\nCharges:\t\t%.2f",charges);
+}
+
+/*********************************************CANCELTICKET()*************************************************/
 
 void cancel() {
     FILE *fp, *temp;
@@ -518,3 +523,5 @@ void cancel() {
         printf("Ticket not found.\n");
     }
 }
+
+/*********************************************END_OF_TRAIN_PART*************************************************/
